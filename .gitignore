@@ -1,0 +1,33 @@
+# Environment secrets — never commit these
+.env
+**/.env
+
+# Dependencies
+node_modules/
+**/node_modules/
+__pycache__/
+**/__pycache__/
+*.pyc
+.venv/
+
+# Build outputs
+.next/
+dist/
+build/
+
+# SQLite databases
+*.db
+*.db-shm
+*.db-wal
+
+# PDF reports
+backend-python/reports/
+backend-python/nikto_*.csv
+
+# PPT generator
+generate_ppt.py
+OMEN_Presentation*.pptx
+
+# Misc
+.DS_Store
+*.log

@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #111113;   /* blackish-grey — not pure black */
+    color: #f0f0f0;              /* bright near-white base text */
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  * { -webkit-font-smoothing: antialiased; }
+
+  h1, h2, h3, h4 {
+    color: #ffffff;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  p  { color: #d1d1d6; }
+  li { color: #d1d1d6; }
+
+  /* Brighter placeholder */
+  ::placeholder { color: #6b6b75 !important; }
+}
+
+@layer components {
+
+  /* ── Primary button — white/silver ── */
+  .btn-primary {
+    @apply bg-white hover:bg-zinc-200 text-black font-extrabold px-5 py-2.5 rounded-xl
+           transition-all duration-200 shadow-lg shadow-white/10 text-sm tracking-wide;
+  }
+
+  /* ── Ghost button ── */
+  .btn-ghost {
+    @apply border border-zinc-600 hover:border-zinc-400 text-zinc-300 hover:text-white
+           font-semibold px-5 py-2.5 rounded-xl transition-all duration-200 text-sm;
+  }
+
+  /* ── Danger button ── */
+  .btn-danger {
+    @apply bg-red-600 hover:bg-red-500 text-white font-bold px-5 py-2.5 rounded-xl
+           transition-all duration-200 text-sm;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background-color: #1a1a1f;
+    border: 1px solid #2a2a32;
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+  .card-sm {
+    background-color: #1a1a1f;
+    border: 1px solid #2a2a32;
+    border-radius: 0.75rem;
+    padding: 1rem;
+  }
+
+  /* ── Severity badges ── */
+  .badge-critical {
+    @apply bg-red-500/15 text-red-300 text-xs font-bold px-3 py-1 rounded-full border border-red-500/40;
+  }
+  .badge-high {
+    @apply bg-orange-500/15 text-orange-300 text-xs font-bold px-3 py-1 rounded-full border border-orange-500/40;
+  }
+  .badge-medium {
+    @apply bg-amber-500/15 text-amber-300 text-xs font-bold px-3 py-1 rounded-full border border-amber-500/40;
+  }
+  .badge-low {
+    @apply bg-zinc-700/50 text-zinc-300 text-xs font-bold px-3 py-1 rounded-full border border-zinc-600;
+  }
+
+  /* ── Input ── */
+  .input {
+    width: 100%;
+    background-color: #0e0e12;
+    border: 1px solid #2e2e38;
+    border-radius: 0.75rem;
+    padding: 0.65rem 1rem;
+    font-size: 0.9rem;
+    color: #f0f0f0;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+  }
+  .input:focus {
+    border-color: #888;
+    box-shadow: 0 0 0 2px rgba(200,200,200,0.08);
+  }
+
+  /* ── Section label ── */
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+}

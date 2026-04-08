@@ -1,0 +1,83 @@
+name: OMEN CI/CD
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test -- --passWithNoTests
+
+  lint-and-test-node:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend-node
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: backend-node/package-lock.json
+      - run: npm ci
+      - run: npm test -- --passWithNoTests
+
+  lint-and-test-python:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend-python
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - run: pip install flake8
+      - run: flake8 . --max-line-length=120 --exclude=__pycache__
+      - run: pytest --tb=short -q
+
+  build-and-push:
+    needs: [lint-and-test-frontend, lint-and-test-node, lint-and-test-python]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build & push frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/omen-frontend:latest
+      - name: Build & push backend-node
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend-node
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/omen-backend-node:latest
+      - name: Build & push backend-python
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend-python
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/omen-backend-python:latest

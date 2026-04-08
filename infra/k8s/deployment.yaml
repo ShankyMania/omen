@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: omen-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: omen-frontend
+  template:
+    metadata:
+      labels:
+        app: omen-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: your-registry/omen-frontend:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: API_URL
+              value: "http://omen-backend-node:4000"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: omen-backend-node
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: omen-backend-node
+  template:
+    metadata:
+      labels:
+        app: omen-backend-node
+    spec:
+      containers:
+        - name: backend-node
+          image: your-registry/omen-backend-node:latest
+          ports:
+            - containerPort: 4000
+          envFrom:
+            - secretRef:
+                name: omen-secrets
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: omen-backend-python
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: omen-backend-python
+  template:
+    metadata:
+      labels:
+        app: omen-backend-python
+    spec:
+      containers:
+        - name: backend-python
+          image: your-registry/omen-backend-python:latest
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: omen-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: omen-frontend
+spec:
+  selector:
+    app: omen-frontend
+  ports:
+    - port: 80
+      targetPort: 3000
+  type: LoadBalancer
