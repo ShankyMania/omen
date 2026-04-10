@@ -113,7 +113,3 @@ npm run dev
 
 cd C:\Users\SAGE\Desktop\PROJECTS\CLG\2nd\OMEN\omen\backend-python
 python -m uvicorn main:app --reload
-=======
-# Omen-Web-Vulnerabilities-Scanner
-Omen, AI Based Web-Vulnerabilities Scanner 
->>>>>>> 203f6733848c4e03e6c4890241f73e584570f5ca
