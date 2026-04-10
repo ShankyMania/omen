@@ -23,7 +23,7 @@ interface Step {
 interface FakeResult {
   is_fake: boolean
   confidence: number
-  verdict: 'ONLINE' | 'OFFLINE' | 'ERROR'
+  verdict: 'ONLINE' | 'OFFLINE' | 'ERROR' | 'FAKE' | 'SUSPICIOUS'
   reasons: string[]
   checks: Record<string, any>
 }
@@ -32,9 +32,6 @@ interface FakeResult {
 function FakeModal({ result, url, onProceed, onCancel }: {
   result: FakeResult; url: string; onProceed: () => void; onCancel: () => void
 }) {
-  const isOffline = result.verdict === 'OFFLINE'
-  const isError   = result.verdict === 'ERROR'
-  const isOnline  = result.verdict === 'ONLINE'
   const isOffline = result.verdict === 'OFFLINE' || result.verdict === 'FAKE'
   const isError   = result.verdict === 'ERROR' || result.verdict === 'SUSPICIOUS'
   const isOnline  = result.verdict === 'ONLINE'
@@ -49,7 +46,6 @@ function FakeModal({ result, url, onProceed, onCancel }: {
                     result.verdict === 'OFFLINE'     ? 'Fake Website'       :
                     result.verdict === 'ERROR'       ? 'Server Error'       : 'Website Online'
 
-  // If online, auto-proceed without showing popup
   if (isOnline) return null
 
   return (

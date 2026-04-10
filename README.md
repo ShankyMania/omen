@@ -116,9 +116,6 @@ Railway NODE - https://omen-production-0a63.up.railway.app
 
 
 
-
-
-
 FOR START 
 
 cd C:\Users\SAGE\Desktop\PROJECTS\CLG\2nd\OMEN\omen\frontend
