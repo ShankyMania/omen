@@ -157,6 +157,10 @@ export default function NewScan() {
     setError('')
     setChecking(true)
     setPendingUrl(url.trim())
+
+    // Wake up Railway backends in background
+    axios.get('/api/warmup').catch(() => {})
+
     try {
       const res = await axios.post('/api/check-fake', { url: url.trim() })
       const data: FakeResult = res.data
@@ -205,7 +209,7 @@ export default function NewScan() {
         }
       }, 1000)
     } catch {
-      setError('Failed to start scan. Is the Python backend running on port 8000?')
+      setError('Failed to start scan — backend is waking up, please wait 30 seconds and try again.')
       setScanning(false); setSteps({})
     }
   }
