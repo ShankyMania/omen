@@ -35,13 +35,19 @@ function FakeModal({ result, url, onProceed, onCancel }: {
   const isOffline = result.verdict === 'OFFLINE'
   const isError   = result.verdict === 'ERROR'
   const isOnline  = result.verdict === 'ONLINE'
+  const isOffline = result.verdict === 'OFFLINE' || result.verdict === 'FAKE'
+  const isError   = result.verdict === 'ERROR' || result.verdict === 'SUSPICIOUS'
+  const isOnline  = result.verdict === 'ONLINE'
 
   const borderCls = isOffline ? 'border-red-500/50'   : isError ? 'border-amber-500/50' : 'border-green-500/50'
   const barCls    = isOffline ? 'bg-red-500'           : isError ? 'bg-amber-500'        : 'bg-green-500'
   const titleCls  = isOffline ? 'text-red-400'         : isError ? 'text-amber-400'      : 'text-green-400'
   const bgGlow    = isOffline ? 'bg-red-500/5'         : isError ? 'bg-amber-500/5'      : 'bg-green-500/5'
   const icon      = isOffline ? '🚫'                   : isError ? '⚠️'                  : '✅'
-  const title     = isOffline ? 'Fake Website'        : isError ? 'Server Error'        : 'Website Online'
+  const title     = result.verdict === 'FAKE'       ? 'Fake Website'       :
+                    result.verdict === 'SUSPICIOUS'  ? 'Suspicious Website' :
+                    result.verdict === 'OFFLINE'     ? 'Fake Website'       :
+                    result.verdict === 'ERROR'       ? 'Server Error'       : 'Website Online'
 
   // If online, auto-proceed without showing popup
   if (isOnline) return null

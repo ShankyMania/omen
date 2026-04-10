@@ -101,8 +101,24 @@ cd backend-python && pip install -r requirements.txt && uvicorn main:app --reloa
 ## Adding a New Frontend Page
 
 1. Create `frontend/src/pages/your-page.tsx`.
+
 2. Add a `<Link>` entry in `frontend/src/components/Header.tsx`.
- 
+
+============================================================================================================
+
+GITHUB REPO - https://github.com/ShankyMania/omen
+
+Vercel REPO - https://vercel.com/shankymanias-projects/omen/BNk32oTTTGURTf4UC4nFcLVjB5yw#L9-L15
+
+Railway PYTHON URL - omen-production-9969.up.railway.app
+
+Railway NODE - https://omen-production-0a63.up.railway.app
+
+
+
+
+
+
 FOR START 
 
 cd C:\Users\SAGE\Desktop\PROJECTS\CLG\2nd\OMEN\omen\frontend
